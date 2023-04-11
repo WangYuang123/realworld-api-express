@@ -3,60 +3,25 @@
  */
 const express = require('express')
 const router = express.Router()
+const articleController = require('../controller/article')
 
 // 文章列表
-router.get('/', async(req, res, next) => {
-	try{
-		res.send('get /article')
-	}catch(err){
-		next(err);
-	}
-})
+router.get('/', articleController.articleList)
 
 // 推送文章
-router.get('/feed', async(req, res, next) => {
-	try{
-		res.send('get /article/feed')
-	}catch(err){
-		next(err);
-	}
-})
+router.get('/feed', articleController.feedList)
 
 // 获取文章
-router.get('/:slug', async(req, res, next) => {
-	try{
-		res.send('get /article/:slug')
-	}catch(err){
-		next(err);
-	}
-})
+router.get('/:slug', articleController.getArticleDetail)
 
 // 创建文章
-router.post('/', async(req, res, next) => {
-	try{
-		res.send('post /article')
-	}catch(err){
-		next(err);
-	}
-})
+router.post('/', articleController.createArticle)
 
 // 更新文章
-router.put('/:slug', async(req, res, next) => {
-	try{
-		res.send('put /article/:slug')
-	}catch(err){
-		next(err);
-	}
-})
+router.put('/:slug', articleController.updateArticle)
 
 // 删除文章
-router.delete('/:slug', async(req, res, next) => {
-	try{
-		res.send('delete /article/:slug')
-	}catch(err){
-		next(err);
-	}
-})
+router.delete('/:slug', articleController.delArticle)
 
 // 添加评论
 router.post('/:slug/comments', async(req, res, next) => {

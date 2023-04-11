@@ -3,33 +3,16 @@
  */
 const express = require('express')
 const router = express.Router()
+const profileController = require('../controller/profile')
 
 // 获取用户资料
-router.get('/:username', async(req, res, next) => {
-	try{
-		res.send('get /profile/:username')
-	}catch(err){
-		next(err);
-	}
-})
+router.get('/:username', profileController.getUserInfo)
 
 // 关注用户
-router.post('/:username/follow', async(req, res, next) => {
-	try{
-		res.send('get /profile/:username/follow')
-	}catch(err){
-		next(err);
-	}
-})
+router.post('/:username/follow', profileController.followUser)
 
 // 取消关注用户
-router.delete('/:username/follow', async(req, res, next) => {
-	try{
-		res.send('delete /profile/:username/follow')
-	}catch(err){
-		next(err);
-	}
-})
+router.delete('/:username/follow', profileController.cancelFollowUser)
 
 
 
