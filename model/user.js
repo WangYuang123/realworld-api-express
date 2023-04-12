@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
-const {createAt, updateAt} = require('./base-model')
+const baseModel = require('./base-model')
 
 const userSchema = new mongoose.Schema({
+	...baseModel,
 	username: {
 		type: String,
 		required: true
@@ -21,9 +22,7 @@ const userSchema = new mongoose.Schema({
 	image: {
 		type: String,
 		default: null
-	},
-	createAt,
-	updateAt
+	}
 })
 
 module.exports = userSchema
