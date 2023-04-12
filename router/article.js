@@ -24,49 +24,19 @@ router.put('/:slug', articleController.updateArticle)
 router.delete('/:slug', articleController.delArticle)
 
 // 添加评论
-router.post('/:slug/comments', async(req, res, next) => {
-	try{
-		res.send('post /article/:slug/comments')
-	}catch(err){
-		next(err);
-	}
-})
+router.post('/:slug/comments', articleController.addComments)
 
 // 获取某个文章的评论
-router.get('/:slug/comments', async(req, res, next) => {
-	try{
-		res.send('get /article/:slug/comments')
-	}catch(err){
-		next(err);
-	}
-})
+router.get('/:slug/comments', articleController.getComments)
 
 // 删除评论
-router.delete('/:slug/comments/:id', async(req, res, next) => {
-	try{
-		res.send('delete /article/:slug/comments/:id')
-	}catch(err){
-		next(err);
-	}
-})
+router.delete('/:slug/comments/:id', articleController.delComments)
 
 // 喜欢文章
-router.post('/:slug/favorite', async(req, res, next) => {
-	try{
-		res.send('post /article/:slug/favorite')
-	}catch(err){
-		next(err);
-	}
-})
+router.post('/:slug/favorite', articleController.favoriteArticle)
 
 // 取消喜欢文章
-router.delete('/:slug/favorite', async(req, res, next) => {
-	try{
-		res.send('delete /article/:slug/favorite')
-	}catch(err){
-		next(err);
-	}
-})
+router.delete('/:slug/favorite', articleController.unFavoriteArticle)
 
 
 module.exports = router
