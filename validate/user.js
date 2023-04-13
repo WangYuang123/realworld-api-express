@@ -20,11 +20,4 @@ exports.register = validate([
 		}
 	}),
 	body('user.password').notEmpty().withMessage('密码不能为空'),
-],(req, res, next) => {
-	const errors = validationResult(req)
-	if(!errors.isEmpty()) {
-		return res.status(401).json({
-			errors: errors.array()
-		})
-	}
-})
+])
