@@ -4,6 +4,8 @@
 const express = require('express')
 const router = express.Router()
 const articleController = require('../controller/article')
+const validate = require('../validate/article')
+const auth = require('../middleware/auth')
 
 // 文章列表
 router.get('/', articleController.articleList)
@@ -12,16 +14,16 @@ router.get('/', articleController.articleList)
 router.get('/feed', articleController.feedList)
 
 // 获取文章
-router.get('/:slug', articleController.getArticleDetail)
+router.get('/:articleId', validate.getArticleDetail, articleController.getArticleDetail)
 
 // 创建文章
-router.post('/', articleController.createArticle)
+router.post('/', auth, validate.createArticle, articleController.createArticle)
 
 // 更新文章
-router.put('/:slug', articleController.updateArticle)
+router.put('/:articleId', auth, validate.updateArticle, articleController.updateArticle)
 
 // 删除文章
-router.delete('/:slug', articleController.delArticle)
+router.delete('/:articleId', auth, validate.deleteArticle, articleController.delArticle)
 
 // 添加评论
 router.post('/:slug/comments', articleController.addComments)

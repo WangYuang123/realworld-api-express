@@ -5,7 +5,7 @@ const { User } = require('../model')
 module.exports = async (req, res, next) => {
 	// 从请求头获取token数据
 	let token = req.headers.authorization
-	console.log(token)
+	// console.log(token)
 	// 验证token是否存在
 	// token = token ? token.split('Token')[1] : null
 	// 如果不存在，发送响应401结束响应
