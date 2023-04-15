@@ -17,6 +17,6 @@ router.post('/users', userValidator.register, userController.register)
 router.get('/user', auth, userController.getCurrentUser)
 
 // 更新用户
-router.put('/user', userController.updateUser)
+router.put('/user', auth,  userController.updateUser)
 
 module.exports = router;

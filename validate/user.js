@@ -26,36 +26,55 @@ exports.register = validate([
 
 // 登录
 exports.login = [
-	// 必填校验
+	// 校验必填
 	validate([
 		body('user.email')
 			.notEmpty().withMessage('邮箱不能为空')
 			.isEmail().withMessage('邮箱格式不正确'),
-		body('user.password').notEmpty().withMessage('密码不能为空')
+		body('user.password')
+			.notEmpty().withMessage('密码必填')
 	]),
-	// 验证用户是否存在
-	validate([
-		body('user.email').custom(async (email, { req }) => {
-			const user = await User.findOne({ email }).select([
-				'email',
-				'password',
-				'username',
-				'bio',
-				'image'
-			])
-			if(!user) {
-				return Promise.reject('用户不存在')
-			}
-			// 将数据挂载到请求对象中，后续的中间件也可以直接使用，就不需要重复查询了
-			req.user = user
-		})
-	]),
-	// 验证密码是否正确
-	validate([
-		body('user.password').custom(async(password, { req }) => {
-			if(md5(password) !== req.user.password) {
-				return Promise.reject('密码错误')
-			}
-		})
-	])
+	
+	// 校验用户是否存在
+	async (req, res, next) => {
+		const { email } = req.body.user
+		const user = await User.findOne({ email }).select([
+			'email',
+			'username',
+			'password',
+			'bio',
+			'image'
+		])
+		
+		if(!user) {
+			res.status(400).json({
+				msg: '用户不存在',
+				code: 10001
+			})
+		}
+		
+		req.user = user
+		next()
+	},
+	
+	// 校验密码是否正确
+	async (req, res, next) => {
+		const { password } = req.body.user
+		const user = req.user
+		
+		if(md5(password) !== user.password) {
+			res.status(400).json({
+				msg: '密码错误',
+				code: 10002
+			})
+		}
+		
+		next()
+	}
+]
+
+
+// 更新用户
+exports.updateUser = [		
+	// 校验输入的内容 TODO:
 ]
